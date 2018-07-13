@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,13 +46,23 @@ public class ToDoAdaptor extends ArrayAdapter {
         TextView dateTextView = output.findViewById(R.id.dateTextView);
         TextView timeTextView = output.findViewById(R.id.timeTextView);
         TextView titleTextView = output.findViewById(R.id.titleTextView);
-        Button editButton = output.findViewById(R.id.editButton);
-        CheckBox itemCheckbox=(CheckBox)output.findViewById(R.id.itemCheckBox);
+        ImageButton editButton = output.findViewById(R.id.editButton);
+        CheckBox itemCheckbox = output.findViewById(R.id.itemCheckBox);
+        ImageButton imageButton = output.findViewById(R.id.imageButton);
+        TextView locationTextView = output.findViewById(R.id.locationTextView);
+
 
         ToDo toDo = items.get(position);
         titleTextView.setText(toDo.title);
         dateTextView.setText(toDo.date);
         timeTextView.setText(toDo.time);
+        locationTextView.setText(locationTextView.getText() + ": " + toDo.location);
+
+
+        if(toDo.favorite == 1){
+            imageButton.setImageDrawable(getContext().getResources().getDrawable(R.drawable.new_favorite));
+        }
+
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +79,15 @@ public class ToDoAdaptor extends ArrayAdapter {
                     toDoItemClickListener.rowButtonClicked(v,position);
             }
         });
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(toDoItemClickListener!=null)
+                    toDoItemClickListener.rowButtonClicked(v,position);
+            }
+        });
+
         return output;
     }
 

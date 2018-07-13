@@ -26,12 +26,14 @@ public class DetailsActivity extends AppCompatActivity {
     TextView detail_description;
     TextView time_text;
     TextView date_text;
+    TextView locationEditText;
 
     public static final String DATE_KEY = "date";
     public static final String TITLE_KEY = "title";
     public static final String DESCRIPTION_KEY = "description";
     public static final String TIME_KEY = "time";
     public static final String ID_KEY = "id";
+    public static final String LOCATION_KEY = "location";
 
 //    public static final String TITLE_DETAILS = "title";
 
@@ -49,6 +51,7 @@ public class DetailsActivity extends AppCompatActivity {
         time_text = (TextView) findViewById(R.id.time_text);
         date_text = (TextView) findViewById(R.id.date_text);
         taskCompletedButton = (Button) findViewById(R.id.taskCompletedButton);
+        locationEditText = (TextView) findViewById(R.id.locationEditText);
 
         Intent intent = getIntent();
 
@@ -56,17 +59,19 @@ public class DetailsActivity extends AppCompatActivity {
         String description = intent.getStringExtra(MainActivity.DESCRIPTION_KEY);
         String date = intent.getStringExtra(MainActivity.DATE_KEY);
         String time = intent.getStringExtra(MainActivity.TIME_KEY);
+        String location = intent.getStringExtra(MainActivity.LOCATION_KEY);
 
         final long id1 = intent.getLongExtra("id",0);
-
         final int position = intent.getIntExtra("position",0);
+        final int fav = intent.getIntExtra("fav",0);
 
         detail_title.setText(title);
         detail_description.setText(description);
         date_text.setText(date);
         time_text.setText(time);
+        locationEditText.setText(location);
 
-        final ToDo toDo = new ToDo(title,description,time,date);
+        final ToDo toDo = new ToDo(title,description,time,date,location,fav);
         toDo.id = id1;
 
         taskCompletedButton.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +93,7 @@ public class DetailsActivity extends AppCompatActivity {
 
                         Intent i = new Intent();
                         Toast.makeText(DetailsActivity.this,"Task "+detail_title.getText().toString()+" Finished",Toast.LENGTH_SHORT).show();
-                        setResult(0, i);
+                        setResult(7, i);
                         finish();
 
                     }
@@ -101,75 +106,36 @@ public class DetailsActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
+
             }
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if(item.getItemId() == R.id.favorite){
-
-            // add to favorites
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.favorite_menu, menu);
-        return true;
-    }
-
-    public void favorites(View view){
-        Intent intent = new Intent(this,FavoritesActivity.class);
-
-        String title = detail_title.getText().toString();
-        String descrip = detail_description.getText().toString();
-
-        intent.putExtra("title_details",title);
-        intent.putExtra("descriptions_details",descrip);
-        startActivity(intent);
-
-        Toast.makeText(this,"Added to favorites",Toast.LENGTH_LONG).show();
-    }
-
-//    public void delete(View view){
-//        Intent intent = new Intent();
-//        // this takes us to the main activity, and deletes the item with the id provided
-//        // we are giving the id to the main activity
+//    public void alarm(View view) {
 //
-//        intent.putExtra("position",position);
-//        setResult(5,intent);
-//        finish();
+//        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.SET_ALARM) ==
+//                PackageManager.PERMISSION_GRANTED){
+//            setAlarm("Done",4,40);
+//        }
+//
+//        // this is for the dialogue, request permission
+//        else{
+//            String[] permissions = {Manifest.permission.SET_ALARM};
+//            ActivityCompat.requestPermissions(this,permissions,1);
+//        }
 //    }
-
-    public void alarm(View view) {
-
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.SET_ALARM) ==
-                PackageManager.PERMISSION_GRANTED){
-            setAlarm("Done",4,40);
-        }
-
-        // this is for the dialogue, request permission
-        else{
-            String[] permissions = {Manifest.permission.SET_ALARM};
-            ActivityCompat.requestPermissions(this,permissions,1);
-        }
-    }
-    public void setAlarm(String message, int hours, int mins){
-
-        Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM)
-                .putExtra(AlarmClock.EXTRA_MESSAGE, message)
-                .putExtra(AlarmClock.EXTRA_HOUR, hours)
-                .putExtra(AlarmClock.EXTRA_MINUTES, mins);
-
-
-         if (intent.resolveActivity(getPackageManager()) != null) {
-        startActivity(intent);
-        }
-    }
+//    public void setAlarm(String message, int hours, int mins){
+//
+//        Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM)
+//                .putExtra(AlarmClock.EXTRA_MESSAGE, message)
+//                .putExtra(AlarmClock.EXTRA_HOUR, hours)
+//                .putExtra(AlarmClock.EXTRA_MINUTES, mins);
+//
+//
+//         if (intent.resolveActivity(getPackageManager()) != null) {
+//        startActivity(intent);
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

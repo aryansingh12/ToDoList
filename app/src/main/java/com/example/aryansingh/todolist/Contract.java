@@ -15,15 +15,10 @@ public class Contract {
         public static final String COLUMN_ID = "id";
         public static final String TIME = "time";
         public static final String DATE = "date";
+        public static final String FAVORITE = "favorite";
+        public static final String LOCATION = "location";
 
     }
 
-    public class Favorites{
-        public static final String TABLE_NAME = "favorites";
-        public static final String COLUMN_TITLE = "title";
-        public static final String COLUMN_DESCRIPTION = "description";
-        public static final String COLUMN_ID = "id";
-        public static final String TIME = "time";
-        public static final String DATE = "date";
-    }
+
 }

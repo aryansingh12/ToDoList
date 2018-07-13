@@ -22,6 +22,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
     EditText titleEditText;
     EditText timeEditText;
     EditText dateEditText;
+    EditText locationEditText;
     EditText descriptionEditText;
     Button finishButton;
     TextView addTask;
@@ -30,6 +31,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
     public static final String TITLE_KEY = "title";
     public static final String DESCRIPTION_KEY = "description";
     public static final String TIME_KEY = "time";
+    public static final String LOCATION_KEY = "location";
 
     int year,month,day;
     int year1,month1,day1;
@@ -37,6 +39,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
     int hour1 = 0,mins1 = 0;
 
     long epochTime=0;
+    long id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,10 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         dateEditText = (EditText) findViewById(R.id.dateEditText);
         descriptionEditText = (EditText) findViewById(R.id.descriptionEditText);
         finishButton=(Button)findViewById(R.id.finishButton);
+        locationEditText = (EditText) findViewById(R.id.locationEditText);
+
+        Intent i = getIntent();
+        id = i.getLongExtra("id",0);
 
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,18 +111,36 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
                 String time = timeEditText.getText().toString();
                 String title = titleEditText.getText().toString();
                 String description = descriptionEditText.getText().toString();
+                String loc = locationEditText.getText().toString();
 
-                Intent intent = new Intent();
-                intent.putExtra(DATE_KEY, date);
-                intent.putExtra(TIME_KEY, time);
-                intent.putExtra(TITLE_KEY, title);
-                intent.putExtra(DESCRIPTION_KEY, description);
+                if(title.length()==0){
+                    titleEditText.setError("Enter a valid title");
+                }
+                else if(time.length()==0){
+                    timeEditText.setError("Enter a valid time");
+                }
+                else if(date.length()==0){
+                    dateEditText.setError("Enter a valid date");
+                }
+                else if(loc.length()==0){
+                    locationEditText.setError("Enter a valid location");
+                }
 
-                setResult(0, intent);
-                finish();
+                else {
+
+                    Intent intent = new Intent();
+                    intent.putExtra(DATE_KEY, date);
+                    intent.putExtra(TIME_KEY, time);
+                    intent.putExtra(TITLE_KEY, title);
+                    intent.putExtra(DESCRIPTION_KEY, description);
+                    intent.putExtra(LOCATION_KEY,loc);
+                    intent.putExtra("id", id);
+
+                    setResult(8, intent);
+                    finish();
+                }
             }
         });
-
     }
 
 

@@ -11,11 +11,15 @@ public class ToDo {
     long id;
     String time;
     String date;
+    String location;
+    int favorite;
 
-    public ToDo(String title, String description, String time, String date) {
+    public ToDo(String title, String description, String time, String date,String location, int favorite) {
         this.title = title;
         this.description = description;
         this.time = time;
         this.date = date;
+        this.location = location;
+        this.favorite = favorite;
     }
 }

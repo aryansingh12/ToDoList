@@ -25,21 +25,19 @@ public class ToDoOpenHelper extends SQLiteOpenHelper{
             instance = new ToDoOpenHelper(context.getApplicationContext());
         return instance;
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // add a column for the favorite, a boolean one
         String todo_table = "CREATE TABLE " + Contract.ToDo.TABLE_NAME +  " ( " +
                 Contract.ToDo.COLUMN_ID +  " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Contract.ToDo.COLUMN_TITLE + " TEXT, "+
-                Contract.ToDo.COLUMN_DESCRIPTION + " TEXT, " + Contract.ToDo.DATE + " TEXT, " + Contract.ToDo.TIME + " TEXT " + " )";
+                Contract.ToDo.COLUMN_TITLE + " TEXT, " + Contract.ToDo.FAVORITE + " INTEGER DEFAULT 0, " +
+        Contract.ToDo.COLUMN_DESCRIPTION + " TEXT, " + Contract.ToDo.LOCATION + " TEXT, "  + Contract.ToDo.DATE + " TEXT, " + Contract.ToDo.TIME + " TEXT " + " )";
 
-        String favorite_table = "CREATE TABLE " + Contract.Favorites.TABLE_NAME +  " ( " +
-                Contract.Favorites.COLUMN_ID +  " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Contract.Favorites.COLUMN_TITLE + " TEXT, "+
-                Contract.Favorites.COLUMN_DESCRIPTION + " TEXT, " + Contract.Favorites.DATE + " TEXT, " + Contract.Favorites.TIME + " TEXT " + " )";
-
-        db.execSQL(favorite_table);
         db.execSQL(todo_table);
     }
+
+//    + Contract.ToDo.FAVORITE + "  flag INTEGER DEFAULT 0,"
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

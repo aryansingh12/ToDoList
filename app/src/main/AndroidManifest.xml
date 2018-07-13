@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailsActivity" />
-        <activity android:name=".FavoritesActivity" />
 
         <receiver
             android:name=".MyReceiver"
@@ -34,7 +33,8 @@
         </receiver>
 
         <activity android:name=".AddActivity" />
-        <activity android:name=".EditActivity"></activity>
+        <activity android:name=".EditActivity" />
+        <activity android:name=".FavoritesActivity"></activity>
     </application>
 
 </manifest>
