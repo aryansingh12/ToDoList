@@ -1,6 +1,8 @@
 package com.example.aryansingh.todolist;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +17,7 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-public class AddActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener{
+public class AddActivity extends AppCompatActivity{
 
 
 
@@ -33,10 +35,10 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
     public static final String TIME_KEY = "time";
     public static final String LOCATION_KEY = "location";
 
-    int year,month,day;
-    int year1,month1,day1;
-    int hour,mins;
-    int hour1 = 0,mins1 = 0;
+    int year,month,currentDay,hour,minute;
+//    int year1,month1,day1;
+//    int hour,mins;
+//    int hour1 = 0,mins1 = 0;
 
     long epochTime=0;
     long id = 0;
@@ -61,9 +63,9 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onClick(View v) {
                 Calendar newCalendar = Calendar.getInstance();
-                int month = newCalendar.get(Calendar.MONTH);
-                int year = newCalendar.get(Calendar.YEAR);
-                int currentDay=newCalendar.get(Calendar.DAY_OF_MONTH);
+                month = newCalendar.get(Calendar.MONTH);
+                year = newCalendar.get(Calendar.YEAR);
+                currentDay=newCalendar.get(Calendar.DAY_OF_MONTH);
                 showDatePicker(AddActivity.this, year, month, currentDay);
             }
         });
@@ -73,8 +75,8 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
             public void onClick(View v) {
 
                 Calendar calendar=Calendar.getInstance();
-                int hour= calendar.get(Calendar.HOUR_OF_DAY);
-                int minute=calendar.get(Calendar.MINUTE);
+                hour = calendar.get(Calendar.HOUR_OF_DAY);
+                minute =calendar.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(AddActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -98,6 +100,8 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
 
                     }
                 },hour,minute,true);
+
+
                 timePickerDialog.setTitle("Select Time");
                 timePickerDialog.show();
 
@@ -139,38 +143,48 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
                     setResult(8, intent);
                     finish();
                 }
+
+                Intent i = new Intent(AddActivity.this,MyReceiver.class);
+
+                i.putExtra("title",title);
+                i.putExtra("description",description);
+
+                PendingIntent intent = PendingIntent.getBroadcast(AddActivity.this,1,i,0);
+                Calendar calendar=Calendar.getInstance();
+                AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                calendar.set(year,month-1,currentDay,hour,minute);
+                long time1 = calendar.getTimeInMillis();
+                manager.set(AlarmManager.RTC_WAKEUP,time1,intent);
+
             }
         });
     }
 
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//    @Override
+//    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//
+//        year1 = year;
+//        month1 = month+1;
+//        day1 = dayOfMonth;
+//
+//        Calendar calendar = Calendar.getInstance();
+//        hour = calendar.get(Calendar.HOUR_OF_DAY);
+//        mins = calendar.get(Calendar.MINUTE);
+//
+//        TimePickerDialog timePickerDialog = new TimePickerDialog(AddActivity.this, AddActivity.this, hour, mins, true);
+//        timePickerDialog.show();
+//
+//        dateEditText.setText(day1 + " / " + month1 + " / " + year1);
+//
+//    }
 
-        year1 = year;
-        month1 = month+1;
-        day1 = dayOfMonth;
-
-        Calendar calendar = Calendar.getInstance();
-        hour = calendar.get(Calendar.HOUR_OF_DAY);
-        mins = calendar.get(Calendar.MINUTE);
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(AddActivity.this, AddActivity.this, hour, mins, true);
-        timePickerDialog.show();
-
-        dateEditText.setText(day1 + " / " + month1 + " / " + year1);
-
-    }
-
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-        hour1 = hourOfDay;
-        mins1 = minute;
-
-
-
-    }
+//    @Override
+//    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//
+//        hour1 = hourOfDay;
+//        mins1 = minute;
+//    }
 
     public void showDatePicker(Context context, int initialYear, int initialMonth, int initialDay) {
 

@@ -56,7 +56,7 @@ public class ToDoAdaptor extends ArrayAdapter {
         titleTextView.setText(toDo.title);
         dateTextView.setText(toDo.date);
         timeTextView.setText(toDo.time);
-        locationTextView.setText(locationTextView.getText() + ": " + toDo.location);
+       locationTextView.setText("Location: " + toDo.location);
 
 
         if(toDo.favorite == 1){

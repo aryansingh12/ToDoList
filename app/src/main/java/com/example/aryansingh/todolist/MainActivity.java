@@ -77,11 +77,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
             String time = cursor.getString(cursor.getColumnIndex(Contract.ToDo.TIME));
             String date = cursor.getString(cursor.getColumnIndex(Contract.ToDo.DATE));
             String location = cursor.getString(cursor.getColumnIndex(Contract.ToDo.LOCATION));
-            int fav = cursor.getInt(cursor.getColumnIndex(Contract.ToDo.FAVORITE));
 
             long id1 = cursor.getLong(cursor.getColumnIndex(Contract.ToDo.COLUMN_ID));
             if(id1>-1) {
-                ToDo toDo = new ToDo(title, description, time, date,location,fav);
+                ToDo toDo = new ToDo(title, description, time, date,location,0);
                 toDo.id = id1;
                 toDos.add(toDo);
             }
