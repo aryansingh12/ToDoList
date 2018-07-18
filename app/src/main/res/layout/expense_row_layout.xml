@@ -2,7 +2,7 @@
 
 
 <LinearLayout android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="100dp"
     android:descendantFocusability="blocksDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res/android"
@@ -86,9 +86,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="Location"
                             android:inputType="textCapWords"
-                            android:textStyle="bold"
                             android:textSize="16dp"
                             android:textColor="@color/darkBlue"
                             android:id="@+id/locationTextView"
@@ -96,19 +94,23 @@
 
                 </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/itemCheckBox"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_weight="0.4"
-                    android:focusable="false" />
-            </LinearLayout>
 
+            </LinearLayout>
+            <CheckBox
+                android:id="@+id/itemCheckBox"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleX="1.2"
+                android:gravity="center"
+                android:scaleY="1.2"
+                android:layout_gravity="center"
+                android:focusable="false" />
             <ImageButton
                 android:id="@+id/imageButton"
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:layout_height="80dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="2.5dp"
                 android:layout_weight="1"
@@ -119,7 +121,8 @@
             <ImageButton
                 android:id="@+id/editButton"
                 android:layout_width="0dp"
-                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:layout_height="80dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="2.5dp"
                 android:layout_weight="1"

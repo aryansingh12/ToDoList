@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                Log.d("Main ", "add button");
+                //Log.d("Main ", "add button");
                 startActivityForResult(intent, 1);
             }
         });

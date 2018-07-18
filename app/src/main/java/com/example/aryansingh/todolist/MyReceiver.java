@@ -21,7 +21,7 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Toast.makeText(context,"hello",Toast.LENGTH_LONG).show();
+        //Toast.makeText(context,"hello",Toast.LENGTH_LONG).show();
 
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
